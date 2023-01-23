@@ -25,7 +25,7 @@ fn main() {
 }
 
 fn send_response(mut stream: TcpStream) {
-    if let Err(e) = stream.write_all(b"+PONG\r\n") {
+    if let Err(e) = stream.write(b"+PONG\r\n") {
         println!("Couldn't send response {e}");
     }
 }

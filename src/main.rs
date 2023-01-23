@@ -1,6 +1,6 @@
 use std::{
     io::Write,
-    net::{TcpListener, TcpStream},
+    net::{TcpListener, TcpStream}, thread,
 };
 
 fn main() {
@@ -13,7 +13,7 @@ fn main() {
         for stream in listener.incoming() {
             match stream {
                 Ok(stream) => {
-                    send_response(stream);
+                    thread::spawn(|| send_response(stream));
                     println!("accepted new connection");
                 }
                 Err(e) => {

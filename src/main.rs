@@ -1,4 +1,4 @@
-use std::net::TcpListener;
+use std::{net::{TcpListener, TcpStream}, io::Write};
 
 fn main() {
     // You can use print statements as follows for debugging, they'll be visible when running tests.
@@ -8,7 +8,8 @@ fn main() {
     
     for stream in listener.incoming() {
         match stream {
-            Ok(_stream) => {
+            Ok(stream) => {
+                send_response(stream);
                 println!("accepted new connection");
             }
             Err(e) => {
@@ -16,4 +17,11 @@ fn main() {
             }
         }
     }
+}
+
+fn send_response(mut stream: TcpStream) {
+    if let Err(e) = stream.write_all(b"+PONG\r\n") {
+        println!("Couldn't send response {e}");
+    }
+    
 }

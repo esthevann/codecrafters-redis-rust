@@ -1,7 +1,6 @@
 use std::{
     io::{Write, Read},
     net::{TcpListener, TcpStream},
-    thread,
 };
 
 fn main() {
@@ -13,7 +12,7 @@ fn main() {
     for stream in listener.incoming() {
         match stream {
             Ok(stream) => {
-                thread::spawn(|| send_response(stream));
+                send_response(stream);
             }
             Err(e) => {
                 println!("error: {}", e);
@@ -32,5 +31,5 @@ fn send_response(mut stream: TcpStream) {
             break;
         }
     }
-    stream.write_all(b"+PONG\r\n").unwrap();
+    stream.write(b"+PONG\r\n").unwrap();
 }

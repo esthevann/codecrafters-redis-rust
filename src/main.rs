@@ -27,6 +27,6 @@ fn main() {
 fn send_response(mut stream: TcpStream) {
 
     while let Ok(_) = stream.write_all(b"+PONG\r\n") {
-        println!("Success");
+        
     }
 }

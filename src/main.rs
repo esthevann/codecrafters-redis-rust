@@ -12,6 +12,7 @@ fn main() {
     for stream in listener.incoming() {
         match stream {
             Ok(stream) => {
+                println!("accepted new connection");
                 send_response(stream);
             }
             Err(e) => {
@@ -30,6 +31,7 @@ fn send_response(mut stream: TcpStream) {
             println!("client closed the connection");
             break;
         }
+        stream.write("+PONG\r\n".as_bytes()).unwrap();
     }
-    stream.write(b"+PONG\r\n").unwrap();
+    
 }
